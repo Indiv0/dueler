@@ -1,0 +1,12 @@
+name: Dueler
+main: in.nikitapek.dueler.DuelerPlugin
+load: POSTWORLD
+version: ${project.version}
+author: Indiv0
+dev-url: http://github.com/Indiv0/dueler/
+
+permissions:
+  dueler.duel:
+    description: Allows the player to challenge another player to a duel.
+  dueler.exempt:
+    description: Exempts the player from being challenged to a duel.
