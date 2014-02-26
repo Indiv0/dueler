@@ -5,7 +5,19 @@ version: ${project.version}
 author: Indiv0
 dev-url: http://github.com/Indiv0/dueler/
 
+commands:
+ duel:
+   description: Duels a player.
+   usage: |
+     /<command> (player) [arena] - Challenges a player to a duel.
+ arena:
+   description: Arena commands.
+   usage: |
+     /<command> add (name) - Adds an arena.
+
 permissions:
+  dueler.arena.add:
+    description: Creates an arena.
   dueler.duel:
     description: Allows the player to challenge another player to a duel.
   dueler.exempt:

@@ -3,7 +3,7 @@ package in.nikitapek.dueler.util;
 import com.amshulman.mbapi.util.PermissionsEnum;
 
 public enum Commands implements PermissionsEnum {
-    DUEL;
+    DUEL, ARENA;
 
     @Override
     public String getPrefix() {
