@@ -8,15 +8,14 @@ import in.nikitapek.dueler.commands.CommandArena;
 import in.nikitapek.dueler.management.DuelerInfoManager;
 import in.nikitapek.dueler.util.DuelerConfigurationContext;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandAdd extends PlayerOnlyCommand {
+public class CommandRemove extends PlayerOnlyCommand {
     private DuelerInfoManager infoManager;
 
-    public CommandAdd(DuelerConfigurationContext configurationContext) {
-        super(configurationContext, CommandArena.ArenaCommands.ADD, 1, 1);
+    public CommandRemove(DuelerConfigurationContext configurationContext) {
+        super(configurationContext, CommandArena.ArenaCommands.REMOVE, 1, 1);
 
         infoManager = configurationContext.infoManager;
     }
@@ -24,17 +23,16 @@ public class CommandAdd extends PlayerOnlyCommand {
     @Override
     protected boolean executeForPlayer(Player player, TypeSafeList<String> args) {
         String arenaName = args.get(0);
-        Location arenaLocation = player.getLocation().getBlock().getLocation();
 
         for (Arena arena : infoManager.arenas) {
             if (arena.getName().equals(arenaName)) {
-                player.sendMessage(ChatColor.RED + String.format("[Dueler] Arena '%s' already exists.", arenaName));
+                infoManager.arenas.remove(arena);
+                player.sendMessage(ChatColor.GREEN + String.format("[Dueler] Successfully removed the '%s' arena.", arenaName));
                 return true;
             }
         }
 
-        infoManager.arenas.add(new Arena(arenaName, arenaLocation));
-        player.sendMessage(ChatColor.GREEN + String.format("[Dueler] Successfully created the '%s' arena at your current location.", arenaName));
+        player.sendMessage(ChatColor.RED + String.format("[Dueler] Failed to remove non-existent arena '%s'.", arenaName));
 
         return true;
     }

@@ -1,21 +1,31 @@
 package in.nikitapek.dueler;
 
+import com.amshulman.mbapi.util.CoreTypes;
+import com.amshulman.typesafety.TypeSafeMap;
+import com.amshulman.typesafety.impl.TypeSafeMapImpl;
+import in.nikitapek.dueler.util.SupplementaryTypes;
 import org.bukkit.Location;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
-public class Arena {
-    private Map<Location, String> spawnAreas;
+public class Arena implements Comparable<Arena> {
+    private String name;
+    private TypeSafeMap<Location, String> spawnAreas;
 
     public Arena() {
-        spawnAreas = new HashMap<>();
+        for (String playerName : spawnAreas.values()) {
+            playerName = null;
+        }
     }
 
-    public Arena(Location location) {
-        this();
+    public Arena(String name, Location location) {
+        spawnAreas = new TypeSafeMapImpl<>(new HashMap<Location, String>(), SupplementaryTypes.LOCATION, CoreTypes.STRING);
         spawnAreas.put(location, null);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isFull() {
@@ -38,5 +48,44 @@ public class Arena {
                 return;
             }
         }
+    }
+
+    public boolean containsPlayer(String playerName) {
+        for (Entry<Location, String> entry : spawnAreas.entrySet()) {
+            if (playerName.equals(entry.getValue())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int getEmptySlots() {
+        int emptySlotCount = 0;
+
+        for (String playerName : spawnAreas.values()) {
+            if (playerName == null) {
+                emptySlotCount++;
+            }
+        }
+
+        return emptySlotCount;
+    }
+
+    @Override
+    public int compareTo(Arena arena) {
+        if (arena == null) {
+            return 1;
+        }
+
+        if (!name.equals(arena.getName())) {
+            return 1;
+        }
+
+        if (spawnAreas.entrySet() != arena.spawnAreas.entrySet()) {
+            return 1;
+        }
+
+        return 0;
     }
 }
