@@ -1,4 +1,4 @@
-# dueler #
+# dueler [![Travis CI](https://secure.travis-ci.org/MinerAp/dueler.png)](http://travis-ci.org/#!/MinerAp/dueler)
 
 A Bukkit plugin that allows players to challenge each other to duels in arenas.
 
